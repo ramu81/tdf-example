@@ -1,0 +1,7 @@
+
+<label for="item"> Add an Item </label>
+<input #newItem id="item" (blur)="addNewItem(newItem.value);newItem.value=''">
+
+
+<p>Today's Item : {{item}} </p>
+
