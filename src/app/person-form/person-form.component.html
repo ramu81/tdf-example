@@ -1,0 +1,62 @@
+<div [hidden]="submitted">
+<form #personForm="ngForm" (ngSubmit)="onSubmit()">
+
+	<div class="form-group"> 
+		<label for="fName"> First Name </label>
+		<input type="text" id="fName" required [(ngModel)]="model.firstName" name="firstName" class="form-control ng-untouched ng-pristine ng-valid"  #firstName="ngModel">
+	
+		<div [hidden]="firstName.valid || firstName.pristine" class="alert alert-danger">
+		First Name is required
+		</div>
+	
+	</div>
+
+	<div class="form-group"> 
+		<label for="lName"> Last Name </label>
+		<input type="text" id="lName" required [(ngModel)]="model.lastName" name="lastName" class="form-control ng-untouched ng-pristine ng-valid" #lastName="ngModel">
+		
+		<div [hidden]="lastName.valid || lastName.pristine" class="alert alert-danger">
+		Last Name is required
+		</div>
+	</div>
+	
+	<div class="form-group"> 
+		<label for="gender"> Gender </label>
+		<select id="gender" name="gender" class="form-control" [(ngModel)]="model.gender" required> 
+		<option *ngFor="let lGender of genders" [value]="lGender"> {{lGender}}</option>
+		</select>
+	</div>
+	
+	<div class="form-group"> 
+		<div (click)="toggle()"  > Toggle </div>
+		<div [hidden]="!visible"  > 
+			<app-item-detail [item]="currentItem" (newItemEvent)="addItem($event)" > </app-item-detail>
+			<ul>
+				<li *ngFor="let item of items" appSpy >{{item}}</li>
+			</ul>
+		</div>
+	</div>
+	<div class="form-group"> 
+		<button type="button" class="btn btn-default" (click)="newPerson()" > New Person </button>
+		<button type="submit" class="btn btn-success" [disabled]="!personForm.form.valid"> Submit </button>
+	</div>
+</form>
+</div>
+{{diagnostic}}  {{ loggerInfo | async }}
+<div [hidden]="!submitted"> 
+ <h2>You submitted the following:</h2>
+  <div class="row">
+    <div class="col-xs-3">First Name</div>
+    <div class="col-xs-9">{{ model.firstName }}</div>
+  </div>
+  <div class="row">
+    <div class="col-xs-3">Last Name</div>
+    <div class="col-xs-9">{{ model.lastName }}</div>
+  </div>
+  <div class="row">
+    <div class="col-xs-3">Gender</div>
+    <div class="col-xs-9">{{ model.gender }}</div>
+  </div>
+  <br>
+  <button class="btn btn-primary" (click)="submitted=false">Edit</button>
+</div>
